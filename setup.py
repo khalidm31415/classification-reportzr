@@ -1,13 +1,15 @@
 import os
 from setuptools import setup
 
-with open(os.path.join('classification_reportzr', 'VERSION')) as file:
+this_directory = os.path.abspath(os.path.dirname(__file__))
+
+with open(os.path.join(this_directory, 'classification_reportzr', 'VERSION')) as file:
     version = file.read().strip()
 
-with open('requirements.txt') as file:
+with open(os.path.join(this_directory, 'requirements.txt')) as file:
     requirements = file.read().splitlines()
 
-with open('README.md') as file:
+with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as file:
     long_description = file.read()
 
 setup(
