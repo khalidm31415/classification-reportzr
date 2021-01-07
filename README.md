@@ -37,7 +37,7 @@ prints
 
 ### Get Classification Report
 ```python
-print(svc_reporter.get_classification_report(0.1, 'train'))
+print(svc_reporter.get_classification_report(test_size=0.1, split='train'))
 ```
 prints
 ```
