@@ -1,153 +1,59 @@
 # Classification Reportzr
+
 Automate machine learning classification task report for Pak Zuherman
 
 ## Install
+
 ```bash
-pip install classification-reportzr
+pip install -U classification-reportzr
 ```
 
 ## Usage
+
 ### Setting-up the experiment
+
 ```python
 from sklearn import datasets
 from sklearn.svm import SVC
 
 from classification_reportzr.reporterzr import Reporterzr
 
-digits = datasets.load_digits()
-samples, labels = digits.data[:-1], digits.target[:-1]
+iris = datasets.load_iris()
+samples, labels = iris.data[:-1], iris.target[:-1]
 
 svc_kwargs = {'C':100.0, 'gamma':0.001}
-svc_reporter = Reporterzr(EstimatorClass=SVC, estimator_kwargs=svc_kwargs, samples=samples, labels=labels, random_state=3)
+svc_reporter = Reporterzr(SVC, svc_kwargs)
+```
 
+### Run The Experiment
+
+```python
 # `test_sizes` defaults to [0.1, ..., 0.9]
-svc_reporter.run_experiment(test_sizes=[0.1, 0.2])
+# `rep` defaults to 10
+svc_reporter.run_experiment(samples, labels, test_sizes=[0.1, 0.2, 0.3], rep=7)
 ```
 
 ### Get Accuracy Report
+
 ```python
-print(svc_reporter.get_accuracy_report())
+print(svc_reporter.report())
 ```
+
 prints
+
 ```
-   train_accuracy  test_accuracy  test_size
-0             1.0       0.994444        0.1
-1             1.0       0.988889        0.2
-```
+Split: 10.0% test - 90.0% train
+           mean     stdev                                      accuracies
+train  0.973429  0.006758  [0.978, 0.985, 0.963, 0.97, 0.978, 0.97, 0.97]
+test   0.961714  0.033156     [0.933, 1.0, 1.0, 1.0, 0.933, 0.933, 0.933]
 
-### Get Classification Report
-```python
-print(svc_reporter.get_classification_report(test_size=0.1, split='train'))
-```
-prints
-```
-              precision    recall  f1-score   support
+Split: 20.0% test - 80.0% train
+           mean     stdev                                        accuracies
+train  0.965143  0.010343  [0.958, 0.966, 0.966, 0.983, 0.958, 0.95, 0.975]
+test   0.952429  0.039326         [1.0, 0.967, 1.0, 0.9, 0.9, 0.967, 0.933]
 
-           0       1.00      1.00      1.00       160
-           1       1.00      1.00      1.00       164
-           2       1.00      1.00      1.00       159
-           3       1.00      1.00      1.00       164
-           4       1.00      1.00      1.00       163
-           5       1.00      1.00      1.00       164
-           6       1.00      1.00      1.00       163
-           7       1.00      1.00      1.00       161
-           8       1.00      1.00      1.00       156
-           9       1.00      1.00      1.00       162
-
-    accuracy                           1.00      1616
-   macro avg       1.00      1.00      1.00      1616
-weighted avg       1.00      1.00      1.00      1616
-```
-
-### Present All Classification Report
-```python
-svc_reporter.present_all_classification_report()
-```
-prints
-```
-Test size: 0.1
-==================================================
-Classification report on train data
-              precision    recall  f1-score   support
-
-           0       1.00      1.00      1.00       160
-           1       1.00      1.00      1.00       164
-           2       1.00      1.00      1.00       159
-           3       1.00      1.00      1.00       164
-           4       1.00      1.00      1.00       163
-           5       1.00      1.00      1.00       164
-           6       1.00      1.00      1.00       163
-           7       1.00      1.00      1.00       161
-           8       1.00      1.00      1.00       156
-           9       1.00      1.00      1.00       162
-
-    accuracy                           1.00      1616
-   macro avg       1.00      1.00      1.00      1616
-weighted avg       1.00      1.00      1.00      1616
-
-==================================================
-Classification report on test data
-              precision    recall  f1-score   support
-
-           0       1.00      1.00      1.00        18
-           1       1.00      1.00      1.00        18
-           2       1.00      1.00      1.00        18
-           3       1.00      1.00      1.00        19
-           4       1.00      1.00      1.00        18
-           5       1.00      0.94      0.97        18
-           6       1.00      1.00      1.00        18
-           7       1.00      1.00      1.00        18
-           8       1.00      1.00      1.00        17
-           9       0.95      1.00      0.97        18
-
-    accuracy                           0.99       180
-   macro avg       0.99      0.99      0.99       180
-weighted avg       0.99      0.99      0.99       180
-
-================================================== 
- ================================================== 
-
-
-
-Test size: 0.2
-==================================================
-Classification report on train data
-              precision    recall  f1-score   support
-
-           0       1.00      1.00      1.00       142
-           1       1.00      1.00      1.00       145
-           2       1.00      1.00      1.00       142
-           3       1.00      1.00      1.00       146
-           4       1.00      1.00      1.00       145
-           5       1.00      1.00      1.00       146
-           6       1.00      1.00      1.00       145
-           7       1.00      1.00      1.00       143
-           8       1.00      1.00      1.00       138
-           9       1.00      1.00      1.00       144
-
-    accuracy                           1.00      1436
-   macro avg       1.00      1.00      1.00      1436
-weighted avg       1.00      1.00      1.00      1436
-
-==================================================
-Classification report on test data
-              precision    recall  f1-score   support
-
-           0       1.00      1.00      1.00        36
-           1       1.00      1.00      1.00        37
-           2       1.00      1.00      1.00        35
-           3       1.00      0.97      0.99        37
-           4       1.00      1.00      1.00        36
-           5       0.97      0.94      0.96        36
-           6       1.00      1.00      1.00        36
-           7       1.00      1.00      1.00        36
-           8       1.00      1.00      1.00        35
-           9       0.92      0.97      0.95        36
-
-    accuracy                           0.99       360
-   macro avg       0.99      0.99      0.99       360
-weighted avg       0.99      0.99      0.99       360
-
-================================================== 
- ================================================== 
+Split: 30.0% test - 70.0% train
+           mean     stdev                                         accuracies
+train  0.976571  0.009897    [0.971, 0.962, 0.99, 0.971, 0.99, 0.971, 0.981]
+test   0.942857  0.026368  [0.933, 0.978, 0.911, 0.978, 0.911, 0.933, 0.956]
 ```
