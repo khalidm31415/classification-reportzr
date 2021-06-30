@@ -19,4 +19,4 @@ def test():
     for report in svc_reporter.reports:
         assert report.loc['train']['accuracies'].size == rep, 'The number of measured accuracy have to match `rep`'
 
-    svc_reporter.report_all_classification()
+    svc_reporter.report()

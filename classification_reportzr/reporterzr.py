@@ -53,7 +53,7 @@ class Reporterzr:
 
             self.reports.append(report)
             
-    def report_all_classification(self):
+    def report(self):
         if not self.reports:
             raise Exception('Run experiment first with ".run_experiment()" method')
             
