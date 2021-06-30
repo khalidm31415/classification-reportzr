@@ -8,6 +8,12 @@ Automate machine learning classification task report for Pak Zuherman
 pip install -U classification-reportzr
 ```
 
+## Test
+
+```bash
+pytest -v
+```
+
 ## Usage
 
 ### Setting-up the experiment
