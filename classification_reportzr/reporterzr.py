@@ -1,6 +1,5 @@
 from collections import OrderedDict
 from typing import Iterable, List, Type
-from typing_extensions import Literal
 
 import numpy as np
 import pandas as pd
