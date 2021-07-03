@@ -32,11 +32,11 @@ class Reporterzr:
             hyper_parameters_column[key] = []
 
         for test_size in test_sizes:
-            X_train, X_test, y_train, y_test = train_test_split(samples, labels, test_size = test_size, stratify = labels)
             for estimator_kwargs in ParameterGrid(self.param_grid):
                 train_accuracies = []
                 test_accuracies = []
                 for _ in range(repetition):
+                    X_train, X_test, y_train, y_test = train_test_split(samples, labels, test_size = test_size, stratify = labels)
                     estimator = self.EstimatorClass(**estimator_kwargs)
                     estimator.fit(X_train, y_train)
             

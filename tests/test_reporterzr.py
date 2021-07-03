@@ -8,9 +8,9 @@ def test():
     samples, labels = iris.data[:-1], iris.target[:-1]
 
     param_grid = {
-    'C': [10,50,100],
-    'gamma': [0.005,0.05,0.5]
-}
+        'C': [10,50,100],
+        'gamma': [0.005,0.05,0.5]
+    }
     svc_reporter = Reporterzr(SVC, param_grid)
 
     test_sizes = [0.1, 0.2, 0.3]
