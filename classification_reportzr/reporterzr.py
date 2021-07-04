@@ -16,7 +16,7 @@ class Reporterzr:
         self.classification_reports = OrderedDict()
         self.reports: List[pd.DataFrame] 
         
-    def run_experiment(self, samples: Iterable, labels: Iterable, test_sizes: List[float] = [round(i * 0.1, 1) for i in range(1,10)], repetition: int = 10):
+    def run_experiment(self, samples: Iterable, labels: Iterable, test_sizes: List[float] = [round(i * 0.1, 1) for i in range(1,10)], repetition: int = 10) -> pd.DataFrame:
         assert len(samples) == len(labels), 'Samples and labels must have equal length'
         assert all(type(test_size) == float for test_size in test_sizes), 'test_sizes should be a list of floats'
         assert type(repetition) == int, 'The number of repetition should be an integer'
@@ -66,4 +66,5 @@ class Reporterzr:
             'Mean Test': [round(test_accuracies.mean(), 3) for test_accuracies in test_accuracies_column],
             'Stdev Test': [round(test_accuracies.std(), 3) for test_accuracies in test_accuracies_column],
         })
-        print(report)
+        
+        return report

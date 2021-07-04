@@ -9,7 +9,8 @@ def test():
 
     param_grid = {
         'C': [10,50,100],
-        'gamma': [0.005,0.05,0.5]
+        'gamma': [0.005,0.05,0.5],
+        'kernel': ['poly', 'rbf', 'kernel']
     }
     svc_reporter = Reporterzr(SVC, param_grid)
 

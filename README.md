@@ -29,7 +29,8 @@ samples, labels = iris.data[:-1], iris.target[:-1]
 
 param_grid = {
     'C': [10,50,100],
-    'gamma': [0.005,0.05,0.5]
+    'gamma': [0.005,0.05,0.5],
+    'kernel': ['poly', 'rbf', 'kernel']
 }
 svc_reporter = Reporterzr(SVC, param_grid)
 ```
@@ -39,7 +40,8 @@ svc_reporter = Reporterzr(SVC, param_grid)
 ```python
 # `test_sizes` defaults to [0.1, ..., 0.9]
 # `repetition` defaults to 10
-svc_reporter.run_experiment(samples, labels, test_sizes=[0.1, 0.2], repetition=3)
+report = svc_reporter.run_experiment(samples, labels, test_sizes=[0.1, 0.2], repetition=3)
+print(report)
 ```
 
 prints
