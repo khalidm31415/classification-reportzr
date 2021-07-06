@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split, ParameterGrid
 from sklearn.metrics import accuracy_score
 
 pd.set_option('display.max_colwidth', 250)
+pd.set_option('display.max_columns', 50)
 
 class Reporterzr:
     def __init__(self, EstimatorClass: Type[ClassifierMixin], param_grid: List[dict]):
