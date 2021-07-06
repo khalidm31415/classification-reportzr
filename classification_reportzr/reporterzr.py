@@ -52,7 +52,7 @@ class Reporterzr:
                     train_accuracy = accuracy_score(y_train, y_pred_train)
                     test_accuracy = accuracy_score(y_test, y_pred_test)
 
-                    experiment_time = round(time.time() - start_time, 3)
+                    experiment_time = round(time.time() - start_time, 5)
                     experiment_times.append(experiment_time)
 
                     train_accuracy = round(train_accuracy, 3)
