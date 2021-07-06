@@ -71,14 +71,14 @@ class Reporterzr:
             'Test Size': test_size_column,
             **hyper_parameters_column,
             'Train Accuracies': train_accuracies_column,
-            'Max Train': [round(train_accuracies.max(), 3) for train_accuracies in train_accuracies_column],
-            'Mean Train': [round(train_accuracies.mean(), 3) for train_accuracies in train_accuracies_column],
-            'Stdev Train': [round(train_accuracies.std(), 3) for train_accuracies in train_accuracies_column],
+            'Max Train Acc': [round(train_accuracies.max(), 3) for train_accuracies in train_accuracies_column],
+            'Mean Train Acc': [round(train_accuracies.mean(), 3) for train_accuracies in train_accuracies_column],
+            'Stdev Train Acc': [round(train_accuracies.std(), 3) for train_accuracies in train_accuracies_column],
             'Test Accuracies': test_accuracies_column,
-            'Max Test': [round(test_accuracies.max(), 3) for test_accuracies in test_accuracies_column],
-            'Mean Test': [round(test_accuracies.mean(), 3) for test_accuracies in test_accuracies_column],
-            'Stdev Test': [round(test_accuracies.std(), 3) for test_accuracies in test_accuracies_column],
-            'Experiment Times': experiment_times_column
+            'Max Test Acc': [round(test_accuracies.max(), 3) for test_accuracies in test_accuracies_column],
+            'Mean Test Acc': [round(test_accuracies.mean(), 3) for test_accuracies in test_accuracies_column],
+            'Stdev Test Acc': [round(test_accuracies.std(), 3) for test_accuracies in test_accuracies_column],
+            'Experiment Times (sec)': experiment_times_column
         })
         
         return report
