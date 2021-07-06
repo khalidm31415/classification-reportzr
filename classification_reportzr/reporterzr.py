@@ -1,3 +1,4 @@
+import time
 from collections import OrderedDict
 from typing import Iterable, List, Type
 
@@ -26,6 +27,7 @@ class Reporterzr:
         test_size_column: List[float] = []
         train_accuracies_column: List[np.ndarray] = []
         test_accuracies_column: List[np.ndarray] = []
+        experiment_times_column: List[float] = []
 
         hyper_parameters_column = {}
         for key in self.param_grid.keys():
@@ -35,22 +37,32 @@ class Reporterzr:
             for estimator_kwargs in ParameterGrid(self.param_grid):
                 train_accuracies = []
                 test_accuracies = []
+                experiment_times = []
                 for _ in range(repetition):
                     X_train, X_test, y_train, y_test = train_test_split(samples, labels, test_size = test_size, stratify = labels)
+
                     estimator = self.EstimatorClass(**estimator_kwargs)
+                    start_time = time.time()
                     estimator.fit(X_train, y_train)
             
                     y_pred_train = estimator.predict(X_train)
                     y_pred_test = estimator.predict(X_test)
             
-                    train_accuracy = round(accuracy_score(y_train, y_pred_train), 3)
-                    test_accuracy = round(accuracy_score(y_test, y_pred_test), 3)
+                    train_accuracy = accuracy_score(y_train, y_pred_train)
+                    test_accuracy = accuracy_score(y_test, y_pred_test)
+
+                    experiment_time = round(time.time() - start_time, 3)
+                    experiment_times.append(experiment_time)
+
+                    train_accuracy = round(train_accuracy, 3)
+                    test_accuracy = round(test_accuracy, 3)
                     train_accuracies.append(train_accuracy)
                     test_accuracies.append(test_accuracy)
                 
                 test_size_column.append(test_size)
                 train_accuracies_column.append(np.array(train_accuracies))
                 test_accuracies_column.append(np.array(test_accuracies))
+                experiment_times_column.append(experiment_times)
                 for key, value in estimator_kwargs.items():
                     hyper_parameters_column[key].append(value)
 
@@ -65,6 +77,7 @@ class Reporterzr:
             'Max Test': [round(test_accuracies.max(), 3) for test_accuracies in test_accuracies_column],
             'Mean Test': [round(test_accuracies.mean(), 3) for test_accuracies in test_accuracies_column],
             'Stdev Test': [round(test_accuracies.std(), 3) for test_accuracies in test_accuracies_column],
+            'Experiment Times': experiment_times_column
         })
         
         return report
